@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo-list</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <input type="text" placeholder="Enter new item" onkeydown="onKeyDwon()" onkeyup="onKeyUp()" autofocus id="item">
+            <button id="btn" class="clicked" onclick="addItemWithClick()"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div class="list-container" id="items_list">
+            <!-- <div class="item" id="item_1">
+                <p>Milk</p>
+                <div class="action-container">
+                    <input type="checkbox" id="checkbox_item_1" onchange="updateBackgroundColor('item_1')">
+                    <span class="fa-solid fa-trash delete" onclick="delete_item('item_1')"></span>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</body>
+<script src="index.js"></script>
+</html>
