@@ -8,7 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div class="main-container">
+    <div class="main-container" id="main-container">
+        <div class="voice-indicator" id="voiceIndicator">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+
+          </div>
         <div class="container">
             <input type="text" placeholder="Enter new item" onkeydown="onKeyDwon()" onkeyup="onKeyUp()" autofocus id="item">
             <button id="btn" class="clicked" onclick="addItemWithClick()"><i class="fa-solid fa-plus"></i></button>

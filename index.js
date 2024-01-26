@@ -12,9 +12,10 @@ const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
       console.log('Command:', command);
       handleCommand(command);
   };
-
+  const voiceIndicator = document.getElementById('voiceIndicator');
   recognition.onend = function () {
       console.log('Stopped listening. Restarting...');
+      voiceIndicator.classList.remove('stopped');
       recognition.start();
   };
 
@@ -47,11 +48,11 @@ const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
         // pass the item name to add item function
         let item = command.substring(command.indexOf('add item') + 9);
         addItem(item);
-      }else if(command.toLowerCase().includes("delete item")){
+      }else if(command.toLowerCase().includes("delete item") || command.toLowerCase().includes("remove item")){
         // pass the item name to add item function
-        let item = command.substring(command.indexOf('delete item') + 12);
+        let item = command.substring(command.indexOf('delete item') + 12) || command.substring(command.indexOf('remove item') + 12);
         delete_item_with_voice_command(item);
-      }else if(command.toLowerCase().includes("delete all")){
+      }else if(command.toLowerCase().includes("delete all") || command.toLowerCase().includes("remove all")){
         // pass the item name to add item function
         localStorage.setItem("items", JSON.stringify([]));
         renderItems([]);
@@ -102,9 +103,9 @@ const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
         });
         localStorage.setItem("items", JSON.stringify(newItems));
         renderItems(newItems);
-      }else if(command.toLowerCase().includes("unmark done")){
+      }else if(command.toLowerCase().includes("mark pending") || command.toLowerCase().includes("mark not done")){
         // pass the item name to add item function
-        let commond_item = command.substring(command.indexOf('unmark done') + 12);
+        let commond_item = command.substring(command.indexOf('mark pending') + 12) || command.substring(command.indexOf('mark not done') + 14);
         let items = JSON.parse(localStorage.getItem("items"));
         let newItems = items.map((item) => {
           if(item.name.trim().toLowerCase() == commond_item.trim().toLowerCase()){
@@ -114,10 +115,58 @@ const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
         });
         localStorage.setItem("items", JSON.stringify(newItems));
         renderItems(newItems);
+      }else if (
+        command.toLowerCase().includes("change background color") ||
+        command.toLowerCase().includes("change background colour")
+      ) {
+        // Extract the color from the command
+        let colorStartIndex =
+          command.toLowerCase().indexOf("change background colour") + 24 ||
+          command.toLowerCase().indexOf("change background color") + 23;
+        let colors = {
+          "red": "#ff0000",
+          "green": "#00ff00",
+          "blue": "#0000ff",
+          "yellow": "#ffff00",
+          "orange": "#ffa500",
+          "pink": "#ffc0cb",
+          "purple": "#800080",
+          "black": "#000000",
+          "white": "#ffffff",
+          "brown": "#a52a2a",
+          "gray": "#808080",
+          "grey": "#808080",
+          "cyan": "#00ffff",
+          "magenta": "#ff00ff",
+          "silver": "#c0c0c0",
+          "maroon": "#800000",
+          "olive": "#808000",
+          "lime": "#00ff00",
+          "teal": "#008080",
+          "indigo": "#4b0082",
+          "violet": "#ee82ee",
+          "navy": "#000080",
+          "aquamarine": "#7fffd4",
+          "turquoise": "#40e0d0",
+        }
+        let color = command.substring(colorStartIndex).trim();
+        if (colors[color]) {
+          color = colors[color];
+        }
+        if (/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$|^rgb\(\d+,\s*\d+,\s*\d+\)$/i.test(color)) {
+          // Set the background color
+          document.getElementById("main-container").style.backgroundColor = color;
+          // document.body.style.backgroundColor = color;
+        } else {
+          console.log('Invalid color format. Please use a valid CSS color name, hex code, or RGB value.');
+        }
+      
+        // Set the background color
       }
-
-  }
-
+      
+    }
+    
+    
   function greetMe() {
       // Implementation for greeting
       speak("Hello! How can I help you?");

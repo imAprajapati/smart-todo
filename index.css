@@ -122,6 +122,40 @@ body{
   transition: transform 0.3s ease-in-out;
 }
 
+.voice-indicator {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  background-color: rgb(43, 43, 209); /* Blue color, change as needed */
+  border-radius: 50%;
+  animation: wave 1.5s infinite alternate; /* Animation called 'wave' lasting 1.5 seconds, repeating infinitely, alternate direction */
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s; /* Add delay to create a wave effect */
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s; /* Add delay to create a wave effect */
+}
+.stopped .dot {
+  animation: none; /* Remove animation when stopped */
+  background-color: #ccc; /* Change color to grey when stopped */
+}
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px); /* Adjust the wave height as needed */
+  }
+}
 
 @media only screen and (max-width: 600px) {
   .main-container{
